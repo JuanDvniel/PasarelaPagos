@@ -1,15 +1,18 @@
 package co.edu.unbosque.view;
 
+import co.edu.unbosque.model.Pago;
 import co.edu.unbosque.model.dto.PagoDTO;
 import co.edu.unbosque.services.PagoService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.transaction.Transactional;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,6 +25,7 @@ public class PagoBean implements Serializable {
 
     private PagoDTO pagoDTO;
     private List<PagoDTO> listaPagos;
+    private Pago transaccionSeleccionada; // Transacción que se va a mostrar en el recibo
 
     @Inject
     private PagoService pagoService;
@@ -46,6 +50,17 @@ public class PagoBean implements Serializable {
             e.printStackTrace(); // Imprime toda la pila de errores
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error", "No se pudo registrar el pago: " + e.getClass().getName() + " - " + e.getMessage()));
+        }
+    }
+
+    // Método para seleccionar la transacción y redirigir a recibo.xhtml
+    public void seleccionarTransaccion(Pago pago) {
+        this.transaccionSeleccionada = pago;
+        try {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect("recibo.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

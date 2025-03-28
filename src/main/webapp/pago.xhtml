@@ -43,47 +43,21 @@
         <p:separator/>
 
         <!-- 📌 LISTADO DE PAGOS -->
-        <p:dataTable id="tablaPagos" var="p" value="#{pagoBean.listaPagos}"
-                     paginator="true" rows="5" emptyMessage="No hay pagos registrados.">
-
-            <p:column headerText="ID Pago">
-                #{p.id}
+        <p:dataTable var="pago" value="#{pagoBean.listaPagos}">
+            <p:column headerText="Fecha">
+                <h:outputText value="#{pago.fechaPago}" />
             </p:column>
-
-            <p:column headerText="Cliente">
-                #{p.nombreCliente}
-            </p:column>
-
-            <p:column headerText="Fecha y Hora">
-                <h:outputText value="#{pagoBean.formatearFecha(p.fechaHora)}"/>
-            </p:column>
-
-
             <p:column headerText="Estado">
-                <p:chip label="#{p.estado}"
-                        styleClass="#{p.estado eq 'ACEPTADO' ? 'ui-chip-success' : 'ui-chip-danger'}"/>
+                <h:outputText value="#{pago.estado}" />
             </p:column>
-
-            <p:column headerText="Últimos 4 Dígitos">
-                #{p.ultimosDigitosTarjeta}
+            <p:column headerText="Total">
+                <h:outputText value="#{pago.valorTotal}" />
             </p:column>
-
-            <p:column headerText="Comercio">
-                #{p.nombreComercio}
-            </p:column>
-
-            <p:column headerText="Valor Total">
-                #{p.valorTotal}
-            </p:column>
-
-            <p:column headerText="Valor IVA">
-                #{p.valorIVA}
-            </p:column>
-
-            <p:column headerText="N° Transacción">
-                #{p.numeroTransaccion}
+            <p:column headerText="Acciones">
+                <p:commandButton value="Ver Recibo" action="#{pagoBean.seleccionarTransaccion(pago)}" />
             </p:column>
         </p:dataTable>
+
 
     </h:form>
 

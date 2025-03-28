@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
+
 <h:head>
     <title>Recibo de Pago</title>
 </h:head>
@@ -10,27 +11,26 @@
     <h:form>
         <p:panel header="Recibo de Pago">
             <h:panelGrid columns="2">
-                <h:outputText value="Fecha y Hora:"/>
-                <h:outputText value="#{pagoBean.fechaPago}"/>
+                <h:outputText value="Fecha y Hora:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.fechaPago}" />
 
-                <h:outputText value="Estado:"/>
-                <h:outputText value="#{pagoBean.estado}"/>
+                <h:outputText value="Estado:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.estado}" />
 
-                <h:outputText value="Últimos 4 dígitos Tarjeta:"/>
-                <h:outputText value="**** **** **** #{pagoBean.ultimosDigitosTarjeta}"/>
+                <h:outputText value="Últimos 4 dígitos Tarjeta:" />
+                <h:outputText value="**** **** **** #{pagoBean.transaccionSeleccionada.ultimosDigitosTarjeta}" />
 
-                <h:outputText value="Comercio:"/>
-                <h:outputText value="#{pagoBean.nombreComercio}"/>
+                <h:outputText value="Comercio:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.nombreComercio}" />
 
-                <h:outputText value="Total Pagado:"/>
-                <h:outputText value="#{pagoBean.valorTotal}"/>
+                <h:outputText value="Total Pagado:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.valorTotal}" />
 
-                <h:outputText value="Código de Transacción:"/>
-                <h:outputText value="#{pagoBean.codigoTransaccion}"/>
+                <h:outputText value="Código de Transacción:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.codigoTransaccion}" />
             </h:panelGrid>
 
-            <p:commandButton value="Imprimir Recibo" type="button" icon="pi pi-print"
-                             onclick="window.print();" styleClass="ui-button-success"/>
+            <p:commandButton value="Volver" icon="pi pi-arrow-left" action="pagos.xhtml?faces-redirect=true"/>
         </p:panel>
     </h:form>
 </h:body>
