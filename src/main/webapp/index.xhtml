@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <title>Inicio - Pasarela de Pagos</title>
+   <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+   <link rel="stylesheet" href="#{request.contextPath}/resources/css/style.css"/>
+</h:head>
+
+<h:body>
+
+   <h:form>
+      <h1>Bienvenido a la Pasarela de Pagos</h1>
+
+      <p:panel header="Menú Principal">
+         <h:panelGrid columns="2" cellpadding="10">
+            <p:commandButton value="Gestión de Clientes" icon="pi pi-users"
+                             action="clientes.xhtml?faces-redirect=true"/>
+            <p:commandButton value="Pagos" icon="pi pi-money-bill"
+                             action="pago.xhtml?faces-redirect=true"/>
+         </h:panelGrid>
+      </p:panel>
+   </h:form>
+
+</h:body>
+</html>

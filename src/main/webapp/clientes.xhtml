@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Gestión de Clientes</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="#{request.contextPath}/resources/css/style.css"/>
+
+</h:head>
+
+<h:body>
+
+    <h:form id="formClientes">
+        <h1>Gestión de Clientes</h1>
+
+        <!-- 📌 FORMULARIO PARA REGISTRAR CLIENTES -->
+        <p:panel header="Nuevo Cliente">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="nombre" value="Nombres y Apellidos:"/>
+                <p:inputText id="nombre" value="#{clienteBean.clienteDTO.nombreCompleto}" required="true"/>
+
+
+                <h:outputLabel for="cedula" value="Cedula:"/>
+                <p:inputText id="cedula" value="#{clienteBean.clienteDTO.cedula}" required="true"/>
+
+            </h:panelGrid>
+
+            <p:commandButton value="Registrar Cliente" action="#{clienteBean.registrarCliente()}"
+                             update="formClientes tablaClientes" icon="pi pi-save" style="margin-top:10px"/>
+        </p:panel>
+
+        <p:separator/>
+
+        <!-- 📌 LISTADO DE CLIENTES -->
+        <p:dataTable id="tablaClientes" var="c" value="#{clienteBean.clientes}"
+                     paginator="true" rows="5" emptyMessage="No hay clientes registrados.">
+
+            <p:column headerText="ID">
+                #{c.id}
+            </p:column>
+
+            <p:column headerText="Nombre">
+                #{c.nombres} #{c.apellidos}
+            </p:column>
+
+
+            <p:column headerText="Acciones">
+                <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                 action="#{clienteBean.eliminarCliente(c.id)}"
+                                 update="formClientes tablaClientes">
+                    <p:confirm header="Confirmar" message="¿Está seguro de eliminar este cliente?" icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+        <!-- 📌 DIALOGO DE CONFIRMACIÓN -->
+        <p:confirmDialog global="true">
+            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+        </p:confirmDialog>
+
+    </h:form>
+
+
+</h:body>
+</html>

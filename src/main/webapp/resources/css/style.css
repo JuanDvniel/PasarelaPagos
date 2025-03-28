@@ -1,0 +1,16 @@
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.p-panel {
+    margin: 20px;
+}
+
+.p-datatable {
+    margin-top: 20px;
+}
+
+.p-commandButton {
+    margin: 5px;
+}
