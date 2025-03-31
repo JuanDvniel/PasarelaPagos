@@ -95,31 +95,14 @@
 
             <p:column headerText="Acciones">
                 <p:commandButton value="Ver Recibo"
-                                 actionListener="#{pagoBean.verRecibo(p.id)}"
-                                 update=":formPagos:reciboDialog"
-                                 oncomplete="PF('reciboDialog').show()"/>
+                                 action="#{pagoBean.verRecibo(p.id)}"
+                                 ajax="false"
+                                 immediate="true"/>
 
             </p:column>
 
         </p:dataTable>
-
-        <p:dialog id="reciboDialog" widgetVar="reciboDialog" header="Recibo de Pago"
-                  modal="true" resizable="false" width="400" dynamic="true">
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel for="idPago" value="ID Pago:"/>
-                <h:outputText id="idPago" value="#{pagoBean.pagoDTO.id}"/>
-
-                <h:outputLabel for="clientePago" value="Cliente:"/>
-                <h:outputText id="clientePago" value="#{pagoBean.pagoDTO.nombreCliente}"/>
-
-                <h:outputLabel for="valorPago" value="Valor Total:"/>
-                <h:outputText id="valorPago" value="#{pagoBean.pagoDTO.valorTotal}"/>
-            </h:panelGrid>
-
-            <p:commandButton value="Cerrar" onclick="PF('reciboDialog').hide()" icon="pi pi-times"
-                             style="margin-top:10px"/>
-        </p:dialog>
-
+        
 
     </h:form>
 

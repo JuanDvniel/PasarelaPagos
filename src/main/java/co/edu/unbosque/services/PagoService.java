@@ -24,36 +24,32 @@ public class PagoService {
 
     @Transactional
     public PagoDTO registrarPago(PagoDTO pagoDTO) {
-        System.out.println("📌 Iniciando registro de pago para el cliente ID: " + pagoDTO.getIdCliente());
+        System.out.println("Registro de pago para el cliente id: " + pagoDTO.getIdCliente());
 
-        // Validar que el cliente exista
         Cliente cliente = clienteService.buscarPorIdEntidad(pagoDTO.getIdCliente());
         if (cliente == null) {
-            System.out.println("❌ Cliente no encontrado: " + pagoDTO.getIdCliente());
+            System.out.println("Cliente no encontrado: " + pagoDTO.getIdCliente());
             throw new IllegalArgumentException("El cliente con ID " + pagoDTO.getIdCliente() + " no existe.");
         }
 
-        System.out.println("✅ Cliente encontrado: " + cliente.getNombres());
+        System.out.println("Cliente encontrado: " + cliente.getNombres());
 
         if (pagoDTO.getUltimosDigitosTarjeta() == null || pagoDTO.getUltimosDigitosTarjeta().length() < 4) {
-            throw new IllegalArgumentException("Los últimos 4 dígitos de la tarjeta son obligatorios.");
+            throw new IllegalArgumentException("Los ultimos 4 dígitos de la tarjeta son obligatorios.");
         }
 
         if (pagoDTO.getBinTarjeta() == null || pagoDTO.getBinTarjeta().length() < 6) {
             throw new IllegalArgumentException("Los primeros 6 dígitos de la tarjeta son obligatorios.");
         }
 
-        // Simulación de transacción
         boolean esPrimerPago = pagoDAO.esPrimeraCompra(pagoDTO.getIdCliente());
         String numeroTransaccion = pagoDAO.generarNumeroTransaccion();
         String estado = simularEstadoPago();
 
-        // Calcular valores
         BigDecimal valorBase = pagoDTO.getValorTotal() != null ? pagoDTO.getValorTotal() : BigDecimal.ZERO;
         BigDecimal valorTotalConDescuento = esPrimerPago ? valorBase.multiply(BigDecimal.valueOf(0.98)) : valorBase;
         BigDecimal valorIVA = valorTotalConDescuento.multiply(BigDecimal.valueOf(0.16));
 
-        // Crear entidad Pago
         Pago pago = new Pago();
         pago.setCliente(cliente);
         pago.setFechaHora(LocalDateTime.now());
@@ -65,23 +61,22 @@ public class PagoService {
         pago.setValorIVA(valorIVA);
         pago.setNumeroTransaccion(numeroTransaccion);
 
-        System.out.println("💾 Guardando pago con estado: " + estado);
+        System.out.println("Guardando estado: " + estado);
 
-        // Persistir en BD
         pagoDAO.create(pago);
 
-        System.out.println("✅ Pago registrado con éxito. Número de transacción: " + numeroTransaccion);
+        System.out.println("Pago registrado con éxito. Número de transacción: " + numeroTransaccion);
 
         return PagoMapper.toDTO(pago);
     }
 
     public Pago buscarPorId(Integer id) {
-        System.out.println("📌 Buscando pago con ID: " + id);
+        System.out.println("Buscando id: " + id);
         Pago pago = pagoDAO.findById(id);
         if (pago == null) {
-            System.out.println("❌ No se encontró el pago con ID: " + id);
+            System.out.println("No se encontró el pago con ID: " + id);
         } else {
-            System.out.println("✅ Pago encontrado: " + pago.getNumeroTransaccion());
+            System.out.println("Pago encontrado: " + pago.getNumeroTransaccion());
         }
         return pago;
     }

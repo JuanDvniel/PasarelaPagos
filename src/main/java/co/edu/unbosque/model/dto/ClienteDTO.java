@@ -6,7 +6,7 @@ public class ClienteDTO {
     private String cedula;
     private String nombres;
     private String apellidos;
-    private String nombreCompleto; // Se almacena como atributo para ser modificable en JSF
+    private String nombreCompleto;
 
     public ClienteDTO() {
     }

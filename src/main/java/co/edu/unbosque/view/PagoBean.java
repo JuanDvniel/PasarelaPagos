@@ -4,14 +4,12 @@ import co.edu.unbosque.model.Pago;
 import co.edu.unbosque.model.dto.PagoDTO;
 import co.edu.unbosque.services.PagoService;
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.transaction.Transactional;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class PagoBean implements Serializable {
 
     private PagoDTO pagoDTO;
@@ -41,8 +39,6 @@ public class PagoBean implements Serializable {
                 .getExternalContext()
                 .getSessionMap()
                 .get("transaccionSeleccionada");
-
-        cargarPagos();
 
         cargarPagos();
     }
@@ -73,18 +69,24 @@ public class PagoBean implements Serializable {
     }
 
     public void verRecibo(Integer id) {
-        System.out.println("📌 Cargando recibo para el pago ID: " + id);
+        System.out.println("Cargando recibo para el pago ID: " + id);
+
         transaccionSeleccionada = pagoService.buscarPorId(id);
 
         if (transaccionSeleccionada == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se encontró el pago."));
+            return;
+        }
+
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("transaccionSeleccionada", transaccionSeleccionada);
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("recibo.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-
-
-
 
     public void cargarPagos() {
         listaPagos = pagoService.obtenerPagos();

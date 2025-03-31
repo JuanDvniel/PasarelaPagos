@@ -7,11 +7,11 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
 
-@ApplicationScoped  // CDI para que funcione con @Inject
+@ApplicationScoped
 public class ClienteService {
 
     @Inject
-    private ClienteDAOImpl clienteDAO;  // Inyección correcta con CDI
+    private ClienteDAOImpl clienteDAO;
 
     @Transactional
     public void registrarCliente(Cliente cliente) {

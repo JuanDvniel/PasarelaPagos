@@ -2,7 +2,6 @@ package co.edu.unbosque.model.dao.impl;
 
 import co.edu.unbosque.model.Cliente;
 import co.edu.unbosque.model.dao.DAO;
-import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;

@@ -2,7 +2,6 @@ package co.edu.unbosque.model.dao.impl;
 
 import co.edu.unbosque.model.Pago;
 import co.edu.unbosque.model.dao.DAO;
-import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
@@ -21,7 +20,7 @@ public class PagoDAOImpl implements DAO<Pago, Integer> {
     @Override
     public void create(Pago entity) {
         em.persist(entity);
-        em.flush();  // 🔥 IMPORTANTE: Forzar la escritura inmediata en la BD
+        em.flush();
     }
 
     @Override
@@ -37,7 +36,7 @@ public class PagoDAOImpl implements DAO<Pago, Integer> {
     @Override
     public void update(Pago entity) {
         em.merge(entity);
-        em.flush();  // 🔥 Asegura que los cambios se reflejen inmediatamente
+        em.flush();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class PagoDAOImpl implements DAO<Pago, Integer> {
         Pago pago = em.find(Pago.class, id);
         if (pago != null) {
             em.remove(pago);
-            em.flush();  // 🔥 Confirma la eliminación
+            em.flush();
         }
     }
 
@@ -78,10 +77,9 @@ public class PagoDAOImpl implements DAO<Pago, Integer> {
                 String[] parts = lastTransaction.split("-");
                 secuencia = Integer.parseInt(parts[2]) + 1;
             } catch (NumberFormatException e) {
-                secuencia = 1; // Evita error en caso de formato inesperado
+                secuencia = 1;
             }
         }
-
         return String.format("TRANS-%s-%05d", fechaActual, secuencia);
     }
 
