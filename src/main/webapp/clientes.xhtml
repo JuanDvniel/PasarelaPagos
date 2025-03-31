@@ -17,9 +17,9 @@
 <h:body>
 
     <h:form id="formClientes">
+        <p:button value="Volver" icon="pi pi-arrow-left" outcome="index.xhtml"/>
         <h1>Gestión de Clientes</h1>
 
-        <!-- 📌 FORMULARIO PARA REGISTRAR CLIENTES -->
         <p:panel header="Nuevo Cliente">
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel for="nombre" value="Nombres y Apellidos:"/>
@@ -37,12 +37,11 @@
 
         <p:separator/>
 
-        <!-- 📌 LISTADO DE CLIENTES -->
         <p:dataTable id="tablaClientes" var="c" value="#{clienteBean.clientes}"
                      paginator="true" rows="5" emptyMessage="No hay clientes registrados.">
 
             <p:column headerText="ID">
-                #{c.id}
+                <h:outputText value="#{c.id}" />
             </p:column>
 
             <p:column headerText="Nombre">
@@ -53,17 +52,19 @@
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar" icon="pi pi-trash"
                                  action="#{clienteBean.eliminarCliente(c.id)}"
-                                 update="formClientes tablaClientes">
+                                 update="formClientes tablaClientes"
+                                 onclick="console.log('Botón eliminar presionado')"
+                                 process="@this">
                     <p:confirm header="Confirmar" message="¿Está seguro de eliminar este cliente?" icon="pi pi-exclamation-triangle"/>
                 </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                </p:confirmDialog>
+
             </p:column>
         </p:dataTable>
-
-        <!-- 📌 DIALOGO DE CONFIRMACIÓN -->
-        <p:confirmDialog global="true">
-            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
-        </p:confirmDialog>
 
     </h:form>
 

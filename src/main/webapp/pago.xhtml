@@ -17,9 +17,9 @@
 <h:body>
 
     <h:form id="formPagos">
+        <p:button value="Volver" icon="pi pi-arrow-left" outcome="index.xhtml"/>
         <h1>Gestión de Pagos</h1>
 
-        <!-- 📌 FORMULARIO PARA REGISTRAR PAGOS -->
         <p:panel header="Nuevo Pago">
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel for="cliente" value="Cliente ID:"/>
@@ -47,7 +47,6 @@
 
         <p:separator/>
 
-        <!-- 📌 LISTADO DE PAGOS -->
         <p:dataTable id="tablaPagos" var="p" value="#{pagoBean.listaPagos}"
                      paginator="true" rows="5" emptyMessage="No hay pagos registrados.">
 
@@ -102,7 +101,7 @@
             </p:column>
 
         </p:dataTable>
-        
+
 
     </h:form>
 

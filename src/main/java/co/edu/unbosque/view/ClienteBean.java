@@ -5,7 +5,7 @@ import co.edu.unbosque.model.mappers.ClienteMapper;
 import co.edu.unbosque.services.ClienteService;
 import co.edu.unbosque.utils.FacesUtils;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class ClienteBean implements Serializable {
 
     private ClienteDTO clienteDTO;
@@ -42,10 +42,12 @@ public class ClienteBean implements Serializable {
 
     public void eliminarCliente(int id) {
         try {
+            System.out.println("✅ Eliminando cliente con ID: " + id);
             clienteService.eliminarCliente(id);
             FacesUtils.mostrarMensajeExito("Cliente eliminado correctamente.");
             cargarClientes();
         } catch (Exception e) {
+            e.printStackTrace();
             FacesUtils.mostrarMensajeError("Error al eliminar el cliente: " + e.getMessage());
         }
     }
