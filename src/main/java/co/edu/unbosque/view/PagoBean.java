@@ -7,6 +7,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
@@ -20,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class PagoBean implements Serializable {
 
     private PagoDTO pagoDTO;
@@ -73,24 +74,14 @@ public class PagoBean implements Serializable {
 
     public void verRecibo(Integer id) {
         System.out.println("📌 Cargando recibo para el pago ID: " + id);
-
         transaccionSeleccionada = pagoService.buscarPorId(id);
 
         if (transaccionSeleccionada == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se encontró el pago."));
-            return;
-        }
-
-        // Almacenar el pago en sesión para que persista después del redirect
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("transaccionSeleccionada", transaccionSeleccionada);
-
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("recibo.xhtml");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
+
 
 
 
