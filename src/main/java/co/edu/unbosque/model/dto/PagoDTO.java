@@ -10,6 +10,7 @@ public class PagoDTO {
     private String nombreCliente;
     private LocalDateTime fechaHora = LocalDateTime.now();
     private String estado;
+    private String binTarjeta;
     private String ultimosDigitosTarjeta;
     private String nombreComercio;
     private BigDecimal valorTotal = BigDecimal.ZERO;
@@ -20,13 +21,14 @@ public class PagoDTO {
     }
 
     public PagoDTO(int id, int idCliente, String nombreCliente, LocalDateTime fechaHora, String estado,
-                   String ultimosDigitosTarjeta, String nombreComercio, BigDecimal valorTotal,
+                   String binTarjeta ,String ultimosDigitosTarjeta, String nombreComercio, BigDecimal valorTotal,
                    BigDecimal valorIVA, String numeroTransaccion) {
         this.id = id;
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.fechaHora = fechaHora;
         this.estado = estado;
+        this.binTarjeta = binTarjeta;
         this.ultimosDigitosTarjeta = ultimosDigitosTarjeta;
         this.nombreComercio = nombreComercio;
         this.valorTotal = valorTotal;
@@ -112,5 +114,13 @@ public class PagoDTO {
 
     public void setNumeroTransaccion(String numeroTransaccion) {
         this.numeroTransaccion = numeroTransaccion;
+    }
+
+    public String getBinTarjeta() {
+        return binTarjeta;
+    }
+
+    public void setBinTarjeta(String binTarjeta) {
+        this.binTarjeta = binTarjeta;
     }
 }

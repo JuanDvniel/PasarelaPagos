@@ -25,8 +25,13 @@
                 <h:outputLabel for="cliente" value="Cliente ID:"/>
                 <p:inputText id="cliente" value="#{pagoBean.pagoDTO.idCliente}" required="true"/>
 
+                <h:outputLabel for="primerosDigitos" value="Primeros 6 dígitos de la tarjeta:"/>
+                <p:inputText id="primerosDigitos" value="#{pagoBean.pagoDTO.binTarjeta}" required="true"
+                             maxlength="6"/>
+
                 <h:outputLabel for="ultimosDigitos" value="Últimos 4 dígitos de la tarjeta:"/>
-                <p:inputText id="ultimosDigitos" value="#{pagoBean.pagoDTO.ultimosDigitosTarjeta}" required="true" maxlength="4"/>
+                <p:inputText id="ultimosDigitos" value="#{pagoBean.pagoDTO.ultimosDigitosTarjeta}" required="true"
+                             maxlength="4"/>
 
                 <h:outputLabel for="comercio" value="Nombre del Comercio:"/>
                 <p:inputText id="comercio" value="#{pagoBean.pagoDTO.nombreComercio}" required="true"/>
@@ -64,6 +69,10 @@
                         styleClass="#{p.estado eq 'ACEPTADO' ? 'ui-chip-success' : 'ui-chip-danger'}"/>
             </p:column>
 
+            <p:column headerText="Primeros 6 Dígitos">
+                #{p.binTarjeta}
+            </p:column>
+
             <p:column headerText="Últimos 4 Dígitos">
                 #{p.ultimosDigitosTarjeta}
             </p:column>
@@ -85,7 +94,11 @@
             </p:column>
 
             <p:column headerText="Acciones">
-                <p:commandButton value="Ver Recibo" action="#{pagoBean.seleccionarTransaccion(pago)}" />
+                <h:form>
+                    <p:commandButton value="Ver Recibo"
+                                     action="#{pagoBean.verRecibo(pago.id)}"
+                                     ajax="false"/>
+                </h:form>
             </p:column>
 
         </p:dataTable>

@@ -35,6 +35,14 @@ public class PagoService {
 
         System.out.println("✅ Cliente encontrado: " + cliente.getNombres());
 
+        if (pagoDTO.getUltimosDigitosTarjeta() == null || pagoDTO.getUltimosDigitosTarjeta().length() < 4) {
+            throw new IllegalArgumentException("Los últimos 4 dígitos de la tarjeta son obligatorios.");
+        }
+
+        if (pagoDTO.getBinTarjeta() == null || pagoDTO.getBinTarjeta().length() < 6) {
+            throw new IllegalArgumentException("Los primeros 6 dígitos de la tarjeta son obligatorios.");
+        }
+
         // Simulación de transacción
         boolean esPrimerPago = pagoDAO.esPrimeraCompra(pagoDTO.getIdCliente());
         String numeroTransaccion = pagoDAO.generarNumeroTransaccion();
@@ -50,6 +58,7 @@ public class PagoService {
         pago.setCliente(cliente);
         pago.setFechaHora(LocalDateTime.now());
         pago.setEstado(estado);
+        pago.setBinTarjeta(pagoDTO.getBinTarjeta());
         pago.setUltimosDigitosTarjeta(pagoDTO.getUltimosDigitosTarjeta());
         pago.setNombreComercio(pagoDTO.getNombreComercio());
         pago.setValorTotal(valorTotalConDescuento);

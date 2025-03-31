@@ -40,7 +40,7 @@ public class PagoBean implements Serializable {
 
     public void registrarPago() {
         try {
-            System.out.println("📌 Registrando pago con datos: " + pagoDTO);
+            System.out.println("Registrando pago con datos: " + pagoDTO);
             pagoDTO = pagoService.registrarPago(pagoDTO);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Éxito", "Pago registrado con estado: " + pagoDTO.getEstado()));
@@ -53,7 +53,6 @@ public class PagoBean implements Serializable {
         }
     }
 
-    // Método para seleccionar la transacción y redirigir a recibo.xhtml
     public void seleccionarTransaccion(Pago pago) {
         this.transaccionSeleccionada = pago;
         try {
@@ -85,7 +84,6 @@ public class PagoBean implements Serializable {
         return fechaHora.format(formatter);
     }
 
-    // Getters y Setters
     public PagoDTO getPagoDTO() {
         return pagoDTO;
     }
@@ -95,7 +93,6 @@ public class PagoBean implements Serializable {
     }
 
     public List<PagoDTO> getListaPagos() {
-        // Garantiza que siempre se tenga la última versión de los pagos
         if (listaPagos == null) {
             cargarPagos();
         }

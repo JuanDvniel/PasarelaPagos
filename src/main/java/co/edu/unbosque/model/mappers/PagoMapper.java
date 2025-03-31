@@ -20,6 +20,7 @@ public class PagoMapper {
                 pago.getCliente().getNombres() + " " + pago.getCliente().getApellidos(),
                 pago.getFechaHora(),
                 pago.getEstado(),
+                pago.getBinTarjeta(),
                 pago.getUltimosDigitosTarjeta(),
                 pago.getNombreComercio(),
                 pago.getValorTotal(),
@@ -36,13 +37,14 @@ public class PagoMapper {
         Pago pago = new Pago();
         pago.setId(pagoDTO.getId());
 
-        // Asignar cliente (Se necesita el ID del cliente para buscar la entidad en la BD)
+
         Cliente cliente = new Cliente();
         cliente.setId(pagoDTO.getIdCliente());
         pago.setCliente(cliente);
 
         pago.setFechaHora(pagoDTO.getFechaHora());
         pago.setEstado(pagoDTO.getEstado());
+        pago.setBinTarjeta(pagoDTO.getBinTarjeta());
         pago.setUltimosDigitosTarjeta(pagoDTO.getUltimosDigitosTarjeta());
         pago.setNombreComercio(pagoDTO.getNombreComercio());
         pago.setValorTotal(pagoDTO.getValorTotal());
