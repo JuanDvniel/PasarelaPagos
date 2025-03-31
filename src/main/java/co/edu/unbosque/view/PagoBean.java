@@ -25,7 +25,7 @@ public class PagoBean implements Serializable {
 
     private PagoDTO pagoDTO;
     private List<PagoDTO> listaPagos;
-    private Pago transaccionSeleccionada; // Transacción que se va a mostrar en el recibo
+    private Pago transaccionSeleccionada;
 
     @Inject
     private PagoService pagoService;
@@ -35,6 +35,14 @@ public class PagoBean implements Serializable {
         pagoDTO = new PagoDTO();
         pagoDTO.setValorTotal(BigDecimal.ZERO);
         pagoDTO.setValorIVA(BigDecimal.ZERO);
+
+        transaccionSeleccionada = (Pago) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getSessionMap()
+                .get("transaccionSeleccionada");
+
+        cargarPagos();
+
         cargarPagos();
     }
 
@@ -62,6 +70,29 @@ public class PagoBean implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public void verRecibo(Integer id) {
+        System.out.println("📌 Cargando recibo para el pago ID: " + id);
+
+        transaccionSeleccionada = pagoService.buscarPorId(id);
+
+        if (transaccionSeleccionada == null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se encontró el pago."));
+            return;
+        }
+
+        // Almacenar el pago en sesión para que persista después del redirect
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("transaccionSeleccionada", transaccionSeleccionada);
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("recibo.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     public void cargarPagos() {
@@ -101,5 +132,21 @@ public class PagoBean implements Serializable {
 
     public void setListaPagos(List<PagoDTO> listaPagos) {
         this.listaPagos = listaPagos;
+    }
+
+    public Pago getTransaccionSeleccionada() {
+        return transaccionSeleccionada;
+    }
+
+    public void setTransaccionSeleccionada(Pago transaccionSeleccionada) {
+        this.transaccionSeleccionada = transaccionSeleccionada;
+    }
+
+    public PagoService getPagoService() {
+        return pagoService;
+    }
+
+    public void setPagoService(PagoService pagoService) {
+        this.pagoService = pagoService;
     }
 }

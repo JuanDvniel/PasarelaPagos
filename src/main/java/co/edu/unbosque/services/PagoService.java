@@ -75,6 +75,18 @@ public class PagoService {
         return PagoMapper.toDTO(pago);
     }
 
+    public Pago buscarPorId(Integer id) {
+        System.out.println("📌 Buscando pago con ID: " + id);
+        Pago pago = pagoDAO.findById(id);
+        if (pago == null) {
+            System.out.println("❌ No se encontró el pago con ID: " + id);
+        } else {
+            System.out.println("✅ Pago encontrado: " + pago.getNumeroTransaccion());
+        }
+        return pago;
+    }
+
+
     public List<PagoDTO> obtenerPagos() {
         List<Pago> pagos = pagoDAO.findAll();
         return PagoMapper.toDTOList(pagos);

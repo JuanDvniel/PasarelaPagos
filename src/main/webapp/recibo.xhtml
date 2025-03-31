@@ -12,13 +12,13 @@
         <p:panel header="Recibo de Pago">
             <h:panelGrid columns="2">
                 <h:outputText value="Fecha y Hora:" />
-                <h:outputText value="#{pagoBean.transaccionSeleccionada.fechaPago}" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.fechaHora}" />
 
                 <h:outputText value="Estado:" />
                 <h:outputText value="#{pagoBean.transaccionSeleccionada.estado}" />
 
-                <h:outputText value="Últimos 4 dígitos Tarjeta:" />
-                <h:outputText value="**** **** **** #{pagoBean.transaccionSeleccionada.ultimosDigitosTarjeta}" />
+                <h:outputText value="Tarjeta:" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.binTarjeta}** **** #{pagoBean.transaccionSeleccionada.ultimosDigitosTarjeta}" />
 
                 <h:outputText value="Comercio:" />
                 <h:outputText value="#{pagoBean.transaccionSeleccionada.nombreComercio}" />
@@ -27,10 +27,10 @@
                 <h:outputText value="#{pagoBean.transaccionSeleccionada.valorTotal}" />
 
                 <h:outputText value="Código de Transacción:" />
-                <h:outputText value="#{pagoBean.transaccionSeleccionada.codigoTransaccion}" />
+                <h:outputText value="#{pagoBean.transaccionSeleccionada.numeroTransaccion}" />
             </h:panelGrid>
 
-            <p:commandButton value="Volver" icon="pi pi-arrow-left" action="pagos.xhtml?faces-redirect=true"/>
+            <p:commandButton actionListener="pagos.xhtml" value="Volver" icon="pi pi-arrow-left"/>
         </p:panel>
     </h:form>
 </h:body>

@@ -96,8 +96,9 @@
             <p:column headerText="Acciones">
                 <h:form>
                     <p:commandButton value="Ver Recibo"
-                                     action="#{pagoBean.verRecibo(pago.id)}"
-                                     ajax="false"/>
+                                     action="#{pagoBean.verRecibo(p.id)}"
+                                     ajax="false"
+                                     immediate="true"/>
                 </h:form>
             </p:column>
 
